@@ -391,10 +391,26 @@ def preparar_base(df, banco):
     empresa = achar_coluna(df, ["Empresa", "Empresa/CNPJ", "CNPJ Empresa", "CNPJ"])
     telefone = achar_coluna(df, ["Telefone", "Telefone celular", "Celular", "WhatsApp"])
     demissao = achar_coluna(df, ["Data de Demissão", "Data Demissão", "Demissão"])
+    ativo_col = achar_coluna(df, ["Ativo", "Status Ativo", "Funcionário Ativo"], obrigatoria=False)
 
-    ativos = df[
-        df[demissao].fillna("").astype(str).str.strip().eq("")
-    ].copy()
+    # Regra de elegibilidade:
+    # 1) Data de Demissão deve estar vazia
+    # 2) Se existir coluna Ativo, ela também deve indicar vínculo ativo.
+    mascara = df[demissao].fillna("").astype(str).str.strip().eq("")
+
+    if ativo_col:
+        def eh_ativo(v):
+            t = normalizar_cabecalho(v)
+            if t in ("", "1", "true", "sim", "s", "ativo", "yes"):
+                return True
+            if t in ("0", "false", "nao", "não", "n", "inativo", "desligado", "demitido", "no"):
+                return False
+            # Se vier um valor inesperado, não exclui automaticamente.
+            return True
+
+        mascara = mascara & df[ativo_col].map(eh_ativo)
+
+    ativos = df[mascara].copy()
 
     ativos["nome"] = ativos[nome].map(s)
     ativos["empresa"] = ativos[empresa].map(s)
@@ -726,7 +742,13 @@ def tela_novo():
         try:
             df = ler_planilha(upload)
             st.session_state.base = preparar_base(df, banco)
-            st.success(f"Planilha carregada: {len(st.session_state.base)} colaboradores ativos.")
+            total_planilha = len(df)
+            ativos_total = len(st.session_state.base)
+            excluidos = max(total_planilha - ativos_total, 0)
+            st.success(
+                f"Planilha carregada: {ativos_total} colaboradores elegíveis para comunicação. "
+                f"{excluidos} registro(s) foram excluídos por desligamento/inatividade ou ausência de vínculo ativo."
+            )
         except Exception as e:
             st.error(f"Erro ao ler a planilha: {e}")
 
