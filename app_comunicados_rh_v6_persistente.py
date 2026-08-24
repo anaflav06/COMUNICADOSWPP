@@ -76,38 +76,174 @@ def carregar_db_github():
     dados = json.loads(conteudo)
     return normalizar_db(dados)
 
-def salvar_db_github(dados, mensagem="Atualiza banco Comunicados RH"):
+def mesclar_bancos(base_remota, base_local):
+    remoto = normalizar_db(base_remota)
+    local = normalizar_db(base_local)
+
+    merged = db_vazio()
+
+    # Contatos: local vence quando houver dado mais recente/mais completo.
+    merged["contatos"] = dict(remoto.get("contatos", {}))
+    for chave, contato in local.get("contatos", {}).items():
+        if chave not in merged["contatos"]:
+            merged["contatos"][chave] = contato
+        else:
+            atual = merged["contatos"][chave]
+            # Preserva telefone válido do local quando existir.
+            tel_local = str(contato.get("telefone", "") or "").strip()
+            tel_remoto = str(atual.get("telefone", "") or "").strip()
+            if tel_local:
+                atual["telefone"] = tel_local
+            elif tel_remoto:
+                atual["telefone"] = tel_remoto
+
+            if contato.get("nome"):
+                atual["nome"] = contato["nome"]
+            if contato.get("empresa"):
+                atual["empresa"] = contato["empresa"]
+            if contato.get("atualizado_em"):
+                atual["atualizado_em"] = contato["atualizado_em"]
+            merged["contatos"][chave] = atual
+
+    # Campanhas: mescla por id e, dentro da campanha, mescla a fila por chave.
+    campanhas = {}
+
+    for origem in (remoto.get("campanhas", []), local.get("campanhas", [])):
+        for camp in origem:
+            cid = int(camp.get("id", 0))
+            if cid <= 0:
+                continue
+
+            if cid not in campanhas:
+                campanhas[cid] = json.loads(json.dumps(camp, ensure_ascii=False))
+                continue
+
+            atual = campanhas[cid]
+
+            # Campos da campanha local/origem mais recente não vazios.
+            for campo in ("titulo", "empresa", "mensagem", "criado_em", "status"):
+                valor = camp.get(campo)
+                if valor not in (None, ""):
+                    atual[campo] = valor
+
+            # Mescla fila por colaborador.
+            fila_merged = {}
+            for item in atual.get("fila", []):
+                fila_merged[item.get("chave", "")] = item
+
+            for item in camp.get("fila", []):
+                chave = item.get("chave", "")
+                if not chave:
+                    continue
+
+                if chave not in fila_merged:
+                    fila_merged[chave] = item
+                    continue
+
+                existente = fila_merged[chave]
+
+                # Prioridade de status: ENVIADO > PULADO > PENDENTE
+                prioridade = {"PENDENTE": 1, "PULADO": 2, "ENVIADO": 3}
+                s_exist = existente.get("status", "PENDENTE")
+                s_novo = item.get("status", "PENDENTE")
+
+                if prioridade.get(s_novo, 0) >= prioridade.get(s_exist, 0):
+                    existente["status"] = s_novo
+
+                if item.get("enviado_em"):
+                    existente["enviado_em"] = item["enviado_em"]
+                if item.get("nome"):
+                    existente["nome"] = item["nome"]
+                if item.get("telefone"):
+                    existente["telefone"] = item["telefone"]
+
+                fila_merged[chave] = existente
+
+            atual["fila"] = list(fila_merged.values())
+            campanhas[cid] = atual
+
+    merged["campanhas"] = [campanhas[k] for k in sorted(campanhas)]
+    merged["ultimo_id_campanha"] = max(
+        int(remoto.get("ultimo_id_campanha", 0) or 0),
+        int(local.get("ultimo_id_campanha", 0) or 0),
+        max(campanhas.keys(), default=0)
+    )
+    return normalizar_db(merged)
+
+def obter_arquivo_github():
     cfg = gh_cfg()
     url = f"https://api.github.com/repos/{cfg['repo']}/contents/{cfg['path']}"
-
-    sha = None
-    r0 = requests.get(
+    r = requests.get(
         url,
         headers=github_headers(),
         params={"ref": cfg["branch"]},
         timeout=20
     )
-    if r0.status_code == 200:
-        sha = r0.json().get("sha")
-    elif r0.status_code != 404:
-        r0.raise_for_status()
 
-    conteudo = json.dumps(
-        normalizar_db(dados),
-        ensure_ascii=False,
-        indent=2
-    ).encode("utf-8")
+    if r.status_code == 404:
+        return None, None, None
 
-    body = {
-        "message": mensagem,
-        "content": base64.b64encode(conteudo).decode("ascii"),
-        "branch": cfg["branch"],
-    }
-    if sha:
-        body["sha"] = sha
-
-    r = requests.put(url, headers=github_headers(), json=body, timeout=20)
     r.raise_for_status()
+    payload = r.json()
+    sha = payload.get("sha")
+    conteudo = base64.b64decode(payload["content"]).decode("utf-8")
+    dados = normalizar_db(json.loads(conteudo))
+    return dados, sha, payload
+
+def salvar_db_github(dados, mensagem="Atualiza banco Comunicados RH", max_tentativas=4):
+    cfg = gh_cfg()
+    url = f"https://api.github.com/repos/{cfg['repo']}/contents/{cfg['path']}"
+
+    ultimo_erro = None
+    dados_local = normalizar_db(dados)
+
+    for tentativa in range(1, max_tentativas + 1):
+        remoto, sha, _ = obter_arquivo_github()
+
+        if remoto is None:
+            dados_mesclados = dados_local
+        else:
+            dados_mesclados = mesclar_bancos(remoto, dados_local)
+
+        conteudo = json.dumps(
+            normalizar_db(dados_mesclados),
+            ensure_ascii=False,
+            indent=2
+        ).encode("utf-8")
+
+        body = {
+            "message": mensagem,
+            "content": base64.b64encode(conteudo).decode("ascii"),
+            "branch": cfg["branch"],
+        }
+        if sha:
+            body["sha"] = sha
+
+        r = requests.put(
+            url,
+            headers=github_headers(),
+            json=body,
+            timeout=20
+        )
+
+        if r.status_code in (200, 201):
+            return dados_mesclados
+
+        # 409 = alguém atualizou o arquivo entre GET e PUT.
+        # Recarrega o arquivo mais recente e tenta de novo.
+        if r.status_code == 409:
+            ultimo_erro = RuntimeError(
+                f"Conflito temporário no GitHub (tentativa {tentativa}/{max_tentativas})."
+            )
+            continue
+
+        r.raise_for_status()
+
+    if ultimo_erro:
+        raise ultimo_erro
+
+    raise RuntimeError("Não foi possível atualizar o banco no GitHub.")
+
 
 def carregar_db_local():
     if not LOCAL_DB.exists():
@@ -149,15 +285,22 @@ def carregar_db():
     return carregar_db_local()
 
 def salvar_db(dados, motivo="Atualiza banco Comunicados RH"):
+    dados = normalizar_db(dados)
     salvar_db_local(dados)
+
     if github_configurado():
         try:
-            salvar_db_github(dados, motivo)
+            final = salvar_db_github(dados, motivo)
+            salvar_db_local(final)
+            return final
         except Exception as e:
             st.error(
                 "Os dados foram salvos localmente, mas não consegui atualizar o banco permanente no GitHub. "
                 f"Detalhe: {e}"
             )
+            return dados
+
+    return dados
 
 # =========================================================
 # UTILITÁRIOS
@@ -281,22 +424,41 @@ def preparar_base(df, banco):
             "atualizado_em": agora()
         })
 
-    # Atualiza cadastro sem apagar telefone salvo válido.
+    # Atualiza cadastro em memória sem gravar no GitHub a cada rerun da tela.
+    houve_alteracao = False
+
     for item in novos:
         chave = item["chave"]
         anterior = banco["contatos"].get(chave, {})
         fone = item["telefone"]
+
         if not telefone_valido(fone) and telefone_valido(anterior.get("telefone", "")):
             fone = anterior["telefone"]
 
-        banco["contatos"][chave] = {
+        novo_contato = {
             "nome": item["nome"],
             "empresa": item["empresa"],
             "telefone": fone,
-            "atualizado_em": agora()
+            "atualizado_em": anterior.get("atualizado_em", "")
         }
 
-    salvar_db(banco, "Atualiza colaboradores Comunicados RH")
+        # Só considera alteração real quando nome/empresa/telefone mudou.
+        if (
+            anterior.get("nome", "") != novo_contato["nome"] or
+            anterior.get("empresa", "") != novo_contato["empresa"] or
+            anterior.get("telefone", "") != novo_contato["telefone"]
+        ):
+            novo_contato["atualizado_em"] = agora()
+            banco["contatos"][chave] = novo_contato
+            houve_alteracao = True
+        elif chave not in banco["contatos"]:
+            novo_contato["atualizado_em"] = agora()
+            banco["contatos"][chave] = novo_contato
+            houve_alteracao = True
+
+    # Mantém cópia local, mas evita commit no GitHub apenas por carregar/recarregar a planilha.
+    salvar_db_local(banco)
+
     return ativos[["chave", "nome", "empresa", "telefone"]]
 
 # =========================================================
