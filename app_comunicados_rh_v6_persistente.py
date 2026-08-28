@@ -757,17 +757,28 @@ def tela_novo():
 
     base = st.session_state.base.copy()
 
-    st.header("2. Escolha a empresa")
+    st.header("2. Escolha a(s) empresa(s)")
     empresas = sorted(x for x in base["empresa"].dropna().unique() if s(x))
-    empresa = st.selectbox("Empresa / CNPJ", empresas)
 
-    selecionados = base[base["empresa"] == empresa].copy()
+    empresas_selecionadas = st.multiselect(
+        "Empresa / CNPJ",
+        empresas,
+        placeholder="Selecione uma ou mais empresas"
+    )
+
+    if not empresas_selecionadas:
+        st.info("Selecione pelo menos uma empresa para continuar.")
+        return
+
+    selecionados = base[base["empresa"].isin(empresas_selecionadas)].copy()
     sem_telefone = selecionados[~selecionados["telefone"].map(telefone_valido)]
 
     c1, c2, c3 = st.columns(3)
-    c1.metric("Ativos", len(selecionados))
+    c1.metric("Selecionados", len(selecionados))
     c2.metric("Com telefone", len(selecionados) - len(sem_telefone))
     c3.metric("Sem telefone", len(sem_telefone))
+
+    st.caption("Empresas selecionadas: " + " • ".join(empresas_selecionadas))
 
     if len(sem_telefone):
         st.warning(
@@ -828,7 +839,7 @@ def tela_novo():
     if st.button("INICIAR ENVIOS"):
         base_atual = st.session_state.base
         aptos = base_atual[
-            (base_atual["empresa"] == empresa) &
+            (base_atual["empresa"].isin(empresas_selecionadas)) &
             (base_atual["telefone"].map(telefone_valido))
         ].copy()
 
@@ -843,7 +854,7 @@ def tela_novo():
         cid = nova_campanha(
             banco,
             titulo.strip() or "Comunicado",
-            empresa,
+            " + ".join(empresas_selecionadas),
             corpo,
             aptos
         )
@@ -910,7 +921,10 @@ def tela_fila():
         use_container_width=True
     )
 
-    st.caption("Confira a conversa e clique em Enviar no próprio WhatsApp.")
+    st.caption(
+        "Confira a conversa e clique em Enviar no próprio WhatsApp. "
+        "Se avançar sem querer, use VOLTAR AO ANTERIOR."
+    )
 
     if st.button("✓ ENVIEI — PRÓXIMO"):
         for item in campanha["fila"]:
@@ -925,6 +939,31 @@ def tela_fila():
             f"Registra envio comunicado {campanha['id']}"
         )
         st.rerun()
+
+    enviados_com_data = [
+        x for x in campanha["fila"]
+        if x.get("status") == "ENVIADO" and x.get("enviado_em")
+    ]
+
+    if enviados_com_data:
+        ultimo_enviado = max(
+            enviados_com_data,
+            key=lambda x: datetime.strptime(x["enviado_em"], "%d/%m/%Y %H:%M:%S")
+        )
+
+        if st.button(f"↩ VOLTAR AO ANTERIOR — {ultimo_enviado['nome']}"):
+            for item in campanha["fila"]:
+                if item["chave"] == ultimo_enviado["chave"]:
+                    item["status"] = "PENDENTE"
+                    item["enviado_em"] = ""
+                    break
+
+            atualizar_campanha(
+                banco,
+                campanha,
+                f"Retorna colaborador anterior comunicado {campanha['id']}"
+            )
+            st.rerun()
 
     if st.button("PULAR ESTE COLABORADOR"):
         for item in campanha["fila"]:
