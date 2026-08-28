@@ -857,7 +857,199 @@
           "enviado_em": "28/08/2026 15:11:47"
         }
       ]
+    },
+    {
+      "id": 4,
+      "titulo": "ifodd 3",
+      "empresa": "GDS LOGISTICA FILIAL",
+      "mensagem": "Conforme estabelecido na Convenção Coletiva de Trabalho 2026/2027, foi determinado o fornecimento do benefício Vale-Alimentação aos colaboradores.\n\nInformamos que o valor do benefício será de R$ 197,00 mensais, com o crédito realizado no último dia útil de cada mês.\n\nOs cartões de Vale-Alimentação serão entregues pelo RH. No momento da entrega, será necessária a assinatura do protocolo de recebimento, confirmando a retirada do cartão.\n\nEm caso de dúvidas, procure o RH.",
+      "criado_em": "28/08/2026 15:28:29",
+      "status": "EM ANDAMENTO",
+      "fila": [
+        {
+          "chave": "AGUINALDO TIMOTEO DOS SANTOS|GDS LOGISTICA FILIAL",
+          "nome": "AGUINALDO TIMOTEO DOS SANTOS",
+          "telefone": "5511994393355",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "ANA CARLA ALMEIDA DE SOUZA|GDS LOGISTICA FILIAL",
+          "nome": "ANA CARLA ALMEIDA DE SOUZA",
+          "telefone": "5511952875022",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "AUSTREGELIO BARBOSA DE QUEIROZ|GDS LOGISTICA FILIAL",
+          "nome": "AUSTREGELIO BARBOSA DE QUEIROZ",
+          "telefone": "5511987448722",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "CAMILA FERREIRA DE FREITAS|GDS LOGISTICA FILIAL",
+          "nome": "CAMILA FERREIRA DE FREITAS",
+          "telefone": "5511977827335",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "CARLOS ALBERTO LUZ DE SOUZA|GDS LOGISTICA FILIAL",
+          "nome": "CARLOS ALBERTO LUZ DE SOUZA",
+          "telefone": "5511987105006",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "CLECIA DA SILVA|GDS LOGISTICA FILIAL",
+          "nome": "CLECIA DA SILVA",
+          "telefone": "5511965787338",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "DANIEL ABADE DE MELO PAPA|GDS LOGISTICA FILIAL",
+          "nome": "DANIEL ABADE DE MELO PAPA",
+          "telefone": "5511969658153",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "DAVID SILVESTRE PEREIRA|GDS LOGISTICA FILIAL",
+          "nome": "DAVID SILVESTRE PEREIRA",
+          "telefone": "5511958426839",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "DOUGLAS MANCINI CARLOS|GDS LOGISTICA FILIAL",
+          "nome": "DOUGLAS MANCINI CARLOS",
+          "telefone": "5511950392046",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "FERNANDA ALVES DE LIMA|GDS LOGISTICA FILIAL",
+          "nome": "FERNANDA ALVES DE LIMA",
+          "telefone": "5511966547414",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "JOSENALDO BATISTA DE OLIVEIRA|GDS LOGISTICA FILIAL",
+          "nome": "JOSENALDO BATISTA DE OLIVEIRA",
+          "telefone": "5511950273518",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "JUAN ESTEVÃO SOUZA MOLINA|GDS LOGISTICA FILIAL",
+          "nome": "JUAN ESTEVÃO SOUZA MOLINA",
+          "telefone": "5511982870311",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "JULIA DE ASSIS DA SILVA|GDS LOGISTICA FILIAL",
+          "nome": "JULIA DE ASSIS DA SILVA",
+          "telefone": "5511954304013",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "KAUA BARBOSA DOS SANTOS|GDS LOGISTICA FILIAL",
+          "nome": "KAUA BARBOSA DOS SANTOS",
+          "telefone": "5521987057802",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "MARLON DOS SANTOS|GDS LOGISTICA FILIAL",
+          "nome": "MARLON DOS SANTOS",
+          "telefone": "5511914643628",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "PAULO JOSÉ MORAIS DO NASCIMENTO|GDS LOGISTICA FILIAL",
+          "nome": "PAULO JOSÉ MORAIS DO NASCIMENTO",
+          "telefone": "5511983323600",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "RAFAELA MOTA DA SILVA|GDS LOGISTICA FILIAL",
+          "nome": "RAFAELA MOTA DA SILVA",
+          "telefone": "5511910259910",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "RICARDO RAIMUNDO DA SILVA|GDS LOGISTICA FILIAL",
+          "nome": "RICARDO RAIMUNDO DA SILVA",
+          "telefone": "5511997382883",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "RODRIGO LIMA HENRIQUE|GDS LOGISTICA FILIAL",
+          "nome": "RODRIGO LIMA HENRIQUE",
+          "telefone": "5511933199274",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "SILESIO PEREIRA NUNES|GDS LOGISTICA FILIAL",
+          "nome": "SILESIO PEREIRA NUNES",
+          "telefone": "5511937310977",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "STEFANY NASCIMENTO DIAS|GDS LOGISTICA FILIAL",
+          "nome": "STEFANY NASCIMENTO DIAS",
+          "telefone": "558398722270",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "TAINÁ IARA DA SILVA SANTOS|GDS LOGISTICA FILIAL",
+          "nome": "TAINÁ IARA DA SILVA SANTOS",
+          "telefone": "5584994401175",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "VANDERLI DE OLIVEIRA TRINDADE|GDS LOGISTICA FILIAL",
+          "nome": "VANDERLI DE OLIVEIRA TRINDADE",
+          "telefone": "5511962541799",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "WEVERTON FRANCISCO DA SILVA|GDS LOGISTICA FILIAL",
+          "nome": "WEVERTON FRANCISCO DA SILVA",
+          "telefone": "5511917609897",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "WILLAS ELEUTÉRIO DA SILVA|GDS LOGISTICA FILIAL",
+          "nome": "WILLAS ELEUTÉRIO DA SILVA",
+          "telefone": "5513996801550",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "WILLIAN DOS SANTOS SILVA|GDS LOGISTICA FILIAL",
+          "nome": "WILLIAN DOS SANTOS SILVA",
+          "telefone": "5511983426237",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        }
+      ]
     }
   ],
-  "ultimo_id_campanha": 3
+  "ultimo_id_campanha": 4
 }
