@@ -686,7 +686,178 @@
           "enviado_em": "28/08/2026 14:53:09"
         }
       ]
+    },
+    {
+      "id": 3,
+      "titulo": "IFOOD 2",
+      "empresa": "GDS LOG SOLUÇÕES LTDA",
+      "mensagem": "Conforme estabelecido na Convenção Coletiva de Trabalho 2026/2027, foi determinado o fornecimento do benefício Vale-Alimentação aos colaboradores.\n\nInformamos que o valor do benefício será de R$ 197,50 mensais, com o crédito realizado no último dia útil de cada mês.\n\nOs cartões de Vale-Alimentação serão entregues pelo RH. No momento da entrega, será necessária a assinatura do protocolo de recebimento, confirmando a retirada do cartão.\n\nEm caso de dúvidas, procure o RH.",
+      "criado_em": "28/08/2026 14:59:03",
+      "status": "EM ANDAMENTO",
+      "fila": [
+        {
+          "chave": "ALBERTO JUNIO DOS SANTOS|GDS LOG SOLUÇÕES LTDA",
+          "nome": "ALBERTO JUNIO DOS SANTOS",
+          "telefone": "5511959811188",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "ANA PAULA SOUZA|GDS LOG SOLUÇÕES LTDA",
+          "nome": "ANA PAULA SOUZA",
+          "telefone": "5511959497351",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "ANDERSON ARAUJO DE SOUSA|GDS LOG SOLUÇÕES LTDA",
+          "nome": "ANDERSON ARAUJO DE SOUSA",
+          "telefone": "5511915302834",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "EDSON CASARI AMORIN|GDS LOG SOLUÇÕES LTDA",
+          "nome": "EDSON CASARI AMORIN",
+          "telefone": "5511969584710",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "FLAVIO CIRILO VIANA DE OLIVEIRA|GDS LOG SOLUÇÕES LTDA",
+          "nome": "FLAVIO CIRILO VIANA DE OLIVEIRA",
+          "telefone": "5511959462150",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "GABRIEL PEREIRA DOS REIS|GDS LOG SOLUÇÕES LTDA",
+          "nome": "GABRIEL PEREIRA DOS REIS",
+          "telefone": "5511965775089",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "GENIVAL VIEIRA DA SILVA JUNIOR|GDS LOG SOLUÇÕES LTDA",
+          "nome": "GENIVAL VIEIRA DA SILVA JUNIOR",
+          "telefone": "5511961187295",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "LAYSA VITORIA VIEIRA SANTIAGO|GDS LOG SOLUÇÕES LTDA",
+          "nome": "LAYSA VITORIA VIEIRA SANTIAGO",
+          "telefone": "5513996601375",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "LEONARDO CHAGAS AGUIAR|GDS LOG SOLUÇÕES LTDA",
+          "nome": "LEONARDO CHAGAS AGUIAR",
+          "telefone": "5511966153526",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "LUCAS MATEUS AUGUSTA|GDS LOG SOLUÇÕES LTDA",
+          "nome": "LUCAS MATEUS AUGUSTA",
+          "telefone": "5511974607919",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "LUIS CARLOS DOS SANTOS|GDS LOG SOLUÇÕES LTDA",
+          "nome": "LUIS CARLOS DOS SANTOS",
+          "telefone": "5511995158842",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "MARCELO DA SILVA ARAUJO|GDS LOG SOLUÇÕES LTDA",
+          "nome": "MARCELO DA SILVA ARAUJO",
+          "telefone": "5511974422079",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "MARCOS FERREIRA  MACIEL|GDS LOG SOLUÇÕES LTDA",
+          "nome": "MARCOS FERREIRA  MACIEL",
+          "telefone": "5511989808277",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "NICOLLAS DOMINGUES SILVA|GDS LOG SOLUÇÕES LTDA",
+          "nome": "NICOLLAS DOMINGUES SILVA",
+          "telefone": "5511951514609",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "PAOLA VITORIA DA SILVA SOUSA|GDS LOG SOLUÇÕES LTDA",
+          "nome": "PAOLA VITORIA DA SILVA SOUSA",
+          "telefone": "5511986784084",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "RAFAELA GARCIA DE OLIVEIRA TEIXEIRA|GDS LOG SOLUÇÕES LTDA",
+          "nome": "RAFAELA GARCIA DE OLIVEIRA TEIXEIRA",
+          "telefone": "5511980574708",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "ROSEANE FRANÇA DE SOUZA|GDS LOG SOLUÇÕES LTDA",
+          "nome": "ROSEANE FRANÇA DE SOUZA",
+          "telefone": "5511974193049",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "VICTOR DE AQUINO OLIVEIRA|GDS LOG SOLUÇÕES LTDA",
+          "nome": "VICTOR DE AQUINO OLIVEIRA",
+          "telefone": "5511966938925",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "VINICIUS DE LIMA SOARES|GDS LOG SOLUÇÕES LTDA",
+          "nome": "VINICIUS DE LIMA SOARES",
+          "telefone": "5511918661227",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "VITOR GUSTAVO LIMA DOS SANTOS|GDS LOG SOLUÇÕES LTDA",
+          "nome": "VITOR GUSTAVO LIMA DOS SANTOS",
+          "telefone": "5511966882150",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "VITOR VINICIUS FERREIRA DO CARMO SCAVUZZ|GDS LOG SOLUÇÕES LTDA",
+          "nome": "VITOR VINICIUS FERREIRA DO CARMO SCAVUZZ",
+          "telefone": "5511993047441",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "WALLACY THOMAS DA SILVA CAVALCANTE|GDS LOG SOLUÇÕES LTDA",
+          "nome": "WALLACY THOMAS DA SILVA CAVALCANTE",
+          "telefone": "5511915650062",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        },
+        {
+          "chave": "WELLINGTON NOGUEIRA DE SOUZA|GDS LOG SOLUÇÕES LTDA",
+          "nome": "WELLINGTON NOGUEIRA DE SOUZA",
+          "telefone": "5511987337052",
+          "status": "PENDENTE",
+          "enviado_em": ""
+        }
+      ]
     }
   ],
-  "ultimo_id_campanha": 2
+  "ultimo_id_campanha": 3
 }
